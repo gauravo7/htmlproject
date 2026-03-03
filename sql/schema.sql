@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS placement_portal CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE placement_portal;
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS students (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  father_name VARCHAR(120) NOT NULL,
+  roll_no VARCHAR(50) NOT NULL UNIQUE,
+  branch VARCHAR(100) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Default admin credentials: admin / Admin@123
+INSERT INTO admins (username, password_hash)
+VALUES ('admin', '$2y$12$apWVmauj8epdeNLmIUFhxOqaewi74YXiEgKLY1/DWxgTGEOqj2R2i')
+ON DUPLICATE KEY UPDATE username = VALUES(username);
